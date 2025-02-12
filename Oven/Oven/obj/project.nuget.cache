@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "K7xgzNpnworhaviHZd0fAZomJ63HHiACKzQJs6lB1273zQcf0UIl+pWbq3lBOJRupVl/B9RDvoDA/uPWE2ToGQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Oleks\\OneDrive\\Рабочий стол\\ookp lab 2\\Oven\\Oven\\Oven.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Oleks\\.nuget\\packages\\system.reactive\\6.0.1\\system.reactive.6.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
