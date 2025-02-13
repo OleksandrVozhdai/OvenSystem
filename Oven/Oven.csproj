@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="arrow.png" />
+    <None Remove="chicken.png" />
+    <None Remove="do.png" />
+    <None Remove="exit.png" />
+    <None Remove="fire.png" />
+    <None Remove="fish.png" />
+    <None Remove="forest.jpg" />
+    <None Remove="home.png" />
+    <None Remove="on.png" />
+    <None Remove="oven.png" />
+    <None Remove="ovenicon.png" />
+    <None Remove="ovenTemperature.png" />
+    <None Remove="pizza.png" />
+    <None Remove="rangeHood.png" />
+    <None Remove="sausage.png" />
+    <None Remove="steak.png" />
+    <None Remove="stove.png" />
+    <None Remove="stoveUp.png" />
+    <None Remove="temperature.png" />
+    <None Remove="time.png" />
+    <None Remove="timer.png" />
+    <None Remove="vegetables.png" />
+    <None Remove="water.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="arrow.png" />
+    <Resource Include="chicken.png" />
+    <Resource Include="do.png" />
+    <Resource Include="exit.png" />
+    <Resource Include="fire.png" />
+    <Resource Include="fish.png" />
+    <Resource Include="forest.jpg" />
+    <Resource Include="home.png" />
+    <Resource Include="on.png" />
+    <Resource Include="oven.png" />
+    <Resource Include="ovenicon.png" />
+    <Resource Include="ovenTemperature.png" />
+    <Resource Include="pizza.png" />
+    <Resource Include="rangeHood.png" />
+    <Resource Include="sausage.png" />
+    <Resource Include="steak.png" />
+    <Resource Include="stove.png" />
+    <Resource Include="stoveUp.png" />
+    <Resource Include="temperature.png" />
+    <Resource Include="time.png" />
+    <Resource Include="timer.png" />
+    <Resource Include="vegetables.png" />
+    <Resource Include="water.png" />
+  </ItemGroup>
+
+</Project>

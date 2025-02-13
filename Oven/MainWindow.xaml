@@ -1,0 +1,1100 @@
+﻿<Window x:Class="Oven.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Oven"
+        mc:Ignorable="d"
+        Title="Oven" Height="600" Width="1000" ResizeMode="NoResize" Icon="/oven.png">
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" 
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" 
+                               SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Overlay" Color="#80A0A0A0"/>
+
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#80404040"/>
+        <SolidColorBrush x:Key="Button.Pressed.Overlay" Color="#80404040"/>
+
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#80404040"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+
+        <Style x:Key="ButtonMainMenuStyle" TargetType="{x:Type Button}">
+            
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="10" Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            SnapsToDevicePixels="true">
+                            <Grid>
+
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                                <Rectangle x:Name="overlay" Fill="Transparent"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="{StaticResource Button.MouseOver.Overlay}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="{StaticResource Button.Pressed.Overlay}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="FocusVisual1">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background1" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border1" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border1" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border1" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background1" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border1" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground1" Color="#FF838383"/>
+        <Style x:Key="OnOffButton" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual1}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background1}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border1}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius ="200" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Opacity" Value="0.8"/>
+                                <Setter Property="BorderBrush" Value="#FFF4F4F4"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" Value="0.6"/>
+                                <Setter Property="BorderBrush" Value="#FFF4F4F4"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border1}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground1}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="FocusVisual2">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background2" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border2" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background1" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border2" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background1" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border2" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background2" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border2" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground2" Color="#FF838383"/>
+        <Style x:Key="onoff" TargetType="{x:Type ToggleButton}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual2}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background2}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border2}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius ="200" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border2}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border2}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background2}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border2}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground2}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="FocusVisual3">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background3" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border3" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background2" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border3" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background2" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border3" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background3" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border3" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground3" Color="#FF838383"/>
+        <!--chicken-->
+        <Style x:Key="ToggleButtonChicken" TargetType="{x:Type ToggleButton}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual3}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background3}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border3}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Grid>
+
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="chicken.png" Stretch="Fill"/>
+                                </Border.Background>
+                            </Border>
+
+
+                            <Rectangle x:Name="overlay" Fill="Transparent"/>
+
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Margin="{TemplateBinding Padding}"
+                        RecognizesAccessKey="True"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="#55000000"/>
+
+                            </Trigger>
+
+
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="#77000000"/>
+
+                                <Setter Property="BorderBrush" TargetName="border" Value="Black"/>
+                            </Trigger>
+
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Fill" TargetName="overlay" Value="#AA808080"/>
+
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border3}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground3}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--beef-->
+        <Style x:Key="ToggleButtonBeef" TargetType="{x:Type ToggleButton}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual3}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background3}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border3}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Grid>
+
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="steak.png" Stretch="Fill"/>
+                                </Border.Background>
+                            </Border>
+
+
+                            <Rectangle x:Name="overlay" Fill="Transparent"/>
+
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Margin="{TemplateBinding Padding}"
+                        RecognizesAccessKey="True"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="#55000000"/>
+
+                            </Trigger>
+
+
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="#77000000"/>
+
+                                <Setter Property="BorderBrush" TargetName="border" Value="Black"/>
+                            </Trigger>
+
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Fill" TargetName="overlay" Value="#AA808080"/>
+
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border3}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground3}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--sausage-->
+        <Style x:Key="ToggleButtonSuasage" TargetType="{x:Type ToggleButton}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual3}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background3}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border3}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Grid>
+
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="sausage.png" Stretch="Fill"/>
+                                </Border.Background>
+                            </Border>
+
+
+                            <Rectangle x:Name="overlay" Fill="Transparent"/>
+
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Margin="{TemplateBinding Padding}"
+                        RecognizesAccessKey="True"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="#55000000"/>
+
+                            </Trigger>
+
+
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="#77000000"/>
+
+                                <Setter Property="BorderBrush" TargetName="border" Value="Black"/>
+                            </Trigger>
+
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Fill" TargetName="overlay" Value="#AA808080"/>
+
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border3}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground3}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--stove-->
+        <!--  <Style x:Key="ToggleButtonStove" TargetType="{x:Type ToggleButton}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual3}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background3}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border3}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Grid>
+
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="sausage.png" Stretch="Fill"/>
+                                </Border.Background>
+                            </Border>
+
+
+                            <Rectangle x:Name="overlay" Fill="Transparent"/>
+
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Margin="{TemplateBinding Padding}"
+                        RecognizesAccessKey="True"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="#55000000"/>
+
+                            </Trigger>
+
+
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Fill" TargetName="overlay" Value="#77000000"/>
+
+                                <Setter Property="BorderBrush" TargetName="border" Value="Black"/>
+                            </Trigger>
+
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Fill" TargetName="overlay" Value="#AA808080"/>
+
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border3}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground3}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style> -->
+
+    </Window.Resources>
+
+    <Window.Background>
+        <ImageBrush ImageSource="/forest.jpg"/>
+    </Window.Background>
+    <Border Name ="MenuBorder" CornerRadius="20" Padding ="20" Opacity="0.5" Margin="20, 20,20,20">
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="1"/>
+                <GradientStop Color="White" Offset="0"/>
+                <GradientStop Color="#FF141414" Offset="0.969"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border.BorderBrush>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black"/>
+                <GradientStop Color="Black" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Grid Name ="OvenGrid">
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+
+            </Grid.RowDefinitions>
+            <Image HorizontalAlignment="Left" Height="297" VerticalAlignment="Top" Width="468" Source="/water.png" Opacity="0.5">
+                <Image.Effect>
+                    <BlurEffect/>
+                </Image.Effect>
+            </Image>
+            <Image HorizontalAlignment="Left" Height="297" VerticalAlignment="Top" Width="468" Source="/water.png" Margin="473,-11,0,0" Opacity="0.5">
+                <Image.Effect>
+                    <BlurEffect/>
+                </Image.Effect>
+            </Image>
+            <Image HorizontalAlignment="Left" Height="297" VerticalAlignment="Top" Width="468" Source="/water.png" Margin="0,268,0,0" Opacity="0.5">
+                <Image.Effect>
+                    <BlurEffect/>
+                </Image.Effect>
+            </Image>
+            <Image HorizontalAlignment="Left" Height="297" VerticalAlignment="Top" Width="468" Source="/water.png" Margin="473,257,0,0" Opacity="0.5">
+                <Image.Effect>
+                    <BlurEffect/>
+                </Image.Effect>
+            </Image>
+            <Grid x:Name="MenuGrid" d:IsHidden="True">
+                <Label x:Name="CurrentTimeLabel" Content="12:10" HorizontalAlignment="Left" Height="154" VerticalAlignment="Top" Width="357" FontSize="90" Margin="10,-13,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect Opacity="0.8" RenderingBias="Quality"/>
+                    </Label.Effect>
+                </Label>
+                <Grid Margin="0,182,20,80">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="539*"/>
+                        <ColumnDefinition Width="361*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{DynamicResource ButtonMainMenuStyle}" x:Name ="StoveButton" Click="StoveButtonClick"  HorizontalAlignment="Left" Height="200" Margin="59,0,0,0" VerticalAlignment="Center" Width="200" Opacity="0.989" BorderThickness="3" BorderBrush="Black" Cursor="Hand" ClickMode="Press">
+
+                        <Button.Background>
+                            <ImageBrush ImageSource="/stove.png"  Viewport="0.05 0.05 0.9 0.9"/>
+                        </Button.Background>
+                    </Button>
+                    <Button HorizontalAlignment="Left" x:Name ="OvenButton" Click ="OvenClick" Height="200" Margin="355,0,0,0" VerticalAlignment="Center" Width="200" Opacity="0.989" BorderThickness="3" BorderBrush="Black" Cursor="Hand" ClickMode="Press" Style="{DynamicResource ButtonMainMenuStyle}" Grid.ColumnSpan="2">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/ovenicon.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="HoodButton" HorizontalAlignment="Left" Height="200" Margin="117,0,0,0" VerticalAlignment="Center" Width="200" Opacity="0.989" BorderThickness="3" BorderBrush="Black" Cursor="Hand" ClickMode="Press" Style="{DynamicResource ButtonMainMenuStyle}" Click="Hood_Click" Grid.Column="1">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/rangeHood.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Ellipse x:Name="HoodElipse" Grid.Column="1" HorizontalAlignment="Left" Height="15" Margin="289,24,0,0" Stroke="Black" VerticalAlignment="Top" Width="16" Fill="Red"/>
+                </Grid>
+                <Label x:Name="WelcomeLabel" Content="Good afternoon!" HorizontalAlignment="Left" Height="154" VerticalAlignment="Top" Width="491" FontSize="60" Margin="287,0,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect Opacity="0.8"/>
+                    </Label.Effect>
+                </Label>
+                <Button Content="" HorizontalAlignment="Left" Height="40" Margin="298,86,0,0" VerticalAlignment="Top" Width="40" BorderThickness="0" Focusable="False" IsHitTestVisible="False" IsTabStop="False">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/temperature.png"/>
+                    </Button.Background>
+                </Button>
+                <Label x:Name ="TemperatureLabel" Content="20°C" HorizontalAlignment="Left" Height="59" VerticalAlignment="Top" Width="195" Margin="338,77,0,0" FontSize="35" Opacity="0.99">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Label x:Name ="TimerLabel" Content="- - - - - - -" HorizontalAlignment="Left" Height="59" VerticalAlignment="Top" Width="224" Margin="485,77,0,0" FontSize="35" Opacity="0.99">
+                    <Label.Effect>
+                        <BlurEffect Radius="0"/>
+                    </Label.Effect>
+                </Label>
+                <Label Content="____" HorizontalAlignment="Left" Height="208" VerticalAlignment="Top" Width="266" Margin="67,-99,0,0" RenderTransformOrigin="0.5,0.5" FontSize="120">
+                    <Label.Effect>
+                        <DropShadowEffect Opacity="0.8"/>
+                    </Label.Effect>
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label x:Name="DataLabel" Content="12-05-2025" HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="173" FontSize="30" Margin="38,90,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Button Content="" HorizontalAlignment="Left" Height="40" Margin="436,88,0,0" VerticalAlignment="Top" Width="40" BorderThickness="0" Focusable="False" IsHitTestVisible="False" IsTabStop="False">
+                    <Button.Effect>
+                        <DropShadowEffect/>
+                    </Button.Effect>
+                    <Button.Background>
+                        <ImageBrush ImageSource="/timer.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="" HorizontalAlignment="Left" Height="60" Margin="659,78,0,0" VerticalAlignment="Top" Width="60" BorderThickness="0" Focusable="False" IsHitTestVisible="False" IsTabStop="False">
+                    <Button.Effect>
+                        <DropShadowEffect/>
+                    </Button.Effect>
+                    <Button.Background>
+                        <ImageBrush ImageSource="/ovenTemperature.png"/>
+                    </Button.Background>
+                </Button>
+                <Label x:Name ="OvenTempLabel" Content="- - -" HorizontalAlignment="Left" Height="59" VerticalAlignment="Top" Width="224" Margin="724,79,0,0" FontSize="35" Opacity="0.99">
+                    <Label.Effect>
+                        <BlurEffect Radius="0"/>
+                    </Label.Effect>
+                </Label>
+                <ToggleButton x:Name ="Exit" Style="{DynamicResource onoff}" Content="" BorderBrush ="Black" BorderThickness="0"  FontSize="120" FontWeight="Bold" Cursor="Hand" Margin="820,0,0,398" Click="Exit_Click" >
+                    <ToggleButton.Effect>
+                        <DropShadowEffect/>
+                    </ToggleButton.Effect>
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="/exit.png"/>
+                    </ToggleButton.Background>
+                </ToggleButton>
+            </Grid>
+            <Grid x:Name ="HoodGrid" d:IsHidden="True">
+                <ToggleButton Style="{DynamicResource onoff}" Content="" BorderBrush ="Black" BorderThickness="3"  FontSize="120" FontWeight="Bold" Cursor="Hand" Margin="36,52,680,252" Click="TurnHood_Click" >
+                    <ToggleButton.Effect>
+                        <DropShadowEffect/>
+                    </ToggleButton.Effect>
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="/on.png"/>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <Button Content="Button" x:Name ="Home" BorderThickness="3" BorderBrush="Black" Style="{DynamicResource ButtonMainMenuStyle}" HorizontalAlignment="Left" Height="200" Margin="682,47,0,0" VerticalAlignment="Top" Width="200" Click="Home_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/home.png"/>
+                    </Button.Background>
+                </Button>
+                <Label Content="Range hood is " HorizontalAlignment="Center" Height="93" VerticalAlignment="Top" Width="391" Margin="0,10,0,0" FontSize="60">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Label x:Name ="HoodCheckLab" Content="OFF" HorizontalAlignment="Center" Height="161" VerticalAlignment="Top" Width="240" Margin="0,91,0,0" FontSize="120">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+
+            </Grid>
+            <Grid x:Name = "OvenGridN" Margin="0,0,-16,0" d:IsHidden="True">
+                <Button Name ="Pizza" Style ="{DynamicResource ButtonMainMenuStyle}"  Click ="PizzaClick"  BorderThickness="3" BorderBrush ="Black"  Content="" HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/pizza.png"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name ="MeatButton" Click ="MeatButtonClick" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness="3"  BorderBrush ="Black" Content="" HorizontalAlignment="Left" Height="200" Margin="237,0,0,0" VerticalAlignment="Top" Width="200">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/chicken.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Name ="VeggetableButton" Click="VeggetableButtonClick" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness="3" BorderBrush ="Black"  Content="" HorizontalAlignment="Left" Height="200" Margin="468,0,0,0" VerticalAlignment="Top" Width="200">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/vegetables.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Name="FishButton" Click="FishButtonClick" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness="3" BorderBrush ="Black"  Content="" HorizontalAlignment="Left" Height="200" Margin="700,0,0,0" VerticalAlignment="Top" Width="210">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/fish.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Style ="{DynamicResource ButtonMainMenuStyle}" Click="OvenMenuClick" BorderThickness="3" BorderBrush ="Black"  Content="" HorizontalAlignment="Left" Height="200" Margin="353,274,0,0" VerticalAlignment="Top" Width="200">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/home.png"/>
+                    </Button.Background>
+                </Button>
+                <Label Content="Baked Goods" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="190" FontSize="30" Margin="10,200,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Label Content="Meat" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="82" FontSize="30" Margin="296,200,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Label Content="Veggie Roast" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="191" FontSize="30" Margin="472,200,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Label Content="Fish" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="69" FontSize="30" Margin="770,200,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+            </Grid>
+
+            <Grid x:Name="PizzaGrid" d:IsHidden="True">
+                <Slider x:Name ="PizzaTemperature" HorizontalAlignment="Left" Height="34" Margin="343,222,0,0" VerticalAlignment="Top" Width="205" Maximum="350" Minimum="50" ValueChanged="PizzaTemperatureValueChanged"/>
+                <Image HorizontalAlignment="Left" Height="185" Margin="725,0,0,0" VerticalAlignment="Top" Width="228" Source="/pizza.png">
+                    <Image.Effect>
+                        <DropShadowEffect BlurRadius="10" Opacity="0.635" ShadowDepth="15" Direction="-44"/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/pizza.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <ComboBox x:Name="TimePicker" SelectionChanged="TimePicker_SelectionChanged" Margin="343,96,372,335" Background="Black" FontSize="30">
+                    <ComboBoxItem Content="5 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="10 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="15 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="20 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="30 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                </ComboBox>
+                <ComboBox x:Name="BakeTypePicker" SelectionChanged="PizzaBakePicker_SelectionChanged" Margin="343,306,372,125" Background="Black" FontSize="20">
+                    <ComboBoxItem Content="Top heat" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="Bottom heat" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="TandB heat" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+
+                </ComboBox>
+
+
+                <Label Content="Baked Goods" HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="519" FontSize="40" Margin="10,0,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Image HorizontalAlignment="Left" Height="68" Margin="244,92,0,0" VerticalAlignment="Top" Width="104" Source="/time.png">
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/time.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Image HorizontalAlignment="Left" Height="68" Margin="244,201,0,0" VerticalAlignment="Top" Width="86" Source="/ovenTemperature.png">
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/ovenTemperature.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Label x:Name ="PizzaTemperatureLabel" Content="50" HorizontalAlignment="Left" Height="59" VerticalAlignment="Top" Width="123" FontSize="40" Margin="553,192,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Button x:Name ="PizzaStartButton" Click ="PizzaStartButtonClick" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness ="3" BorderBrush="Black" Content="" HorizontalAlignment="Left" Height="150" Margin="746,304,0,0" VerticalAlignment="Top" Width="150">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/do.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Click ="PizzaBackClick" x:Name ="PizzaBack" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness ="3"  BorderBrush="Black" Content="" HorizontalAlignment="Left" Height="150" Margin="28,294,0,0" VerticalAlignment="Top" Width="150">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/home.png"/>
+                    </Button.Background>
+                </Button>
+                <Label Content="Start" HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="106" FontSize="40" Margin="770,235,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Image HorizontalAlignment="Left" Height="68" Margin="250,301,0,0" VerticalAlignment="Top" Width="104" Source="/fire.png">
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/fire.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Ellipse x:Name ="PizzaTimerElipse" Fill ="Red"  HorizontalAlignment="Left" Height="24" Margin="553,109,0,0" Stroke="Black" VerticalAlignment="Top" Width="24"/>
+                <Ellipse x:Name ="PizzaBakeElipse" Fill ="Red" HorizontalAlignment="Left" Height="23.9" Margin="553,323,0,0" Stroke="Black" VerticalAlignment="Top" Width="24"/>
+                <Image HorizontalAlignment="Left" Height="68" Margin="412,0,0,0" VerticalAlignment="Top" Width="104" Source="/arrow.png" RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/arrow.png"/>
+                    </Image.OpacityMask>
+                </Image>
+
+            </Grid>
+            <Grid x:Name="MeatGrid" Margin="0,0,-16,0" d:IsHidden="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="75*"/>
+                    <RowDefinition Height="89*"/>
+                </Grid.RowDefinitions>
+                <ComboBox x:Name="MeatTimePicker" SelectionChanged="MeatTimePicker_SelectionChanged" Margin="343,97,373,62" Background="Black" FontSize="30">
+                    <ComboBoxItem Content="20 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="30 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="40 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="60 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="80 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="100 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="120 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                </ComboBox>
+                <Image HorizontalAlignment="Left" Height="68" Margin="244,92,0,0" VerticalAlignment="Top" Width="104" Source="/time.png">
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/time.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Ellipse x:Name ="MeatTimerElipse" Fill ="Red"  HorizontalAlignment="Left" Height="24" Margin="569,115,0,0" Stroke="Black" VerticalAlignment="Top" Width="24"/>
+                <Image HorizontalAlignment="Left" Height="68" Margin="412,0,0,0" VerticalAlignment="Top" Width="104" Source="/arrow.png" RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/arrow.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Image HorizontalAlignment="Left" Height="185" Margin="725,0,0,0" VerticalAlignment="Top" Width="228" Source="/chicken.png" Grid.RowSpan="2">
+                    <Image.Effect>
+                        <DropShadowEffect BlurRadius="10" Opacity="0.635" ShadowDepth="15" Direction="-44"/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/chicken.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Label Content="Meat" HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="324" FontSize="40" Margin="10,0,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Button Click ="MeatBackClick" x:Name ="MeatBack" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness ="3"  BorderBrush="Black" Content="" HorizontalAlignment="Left" Height="150" Margin="28,0,0,0" VerticalAlignment="Center" Width="150" Grid.Row="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/home.png"/>
+                    </Button.Background>
+                </Button>
+                <Slider x:Name ="MeatTemperature" HorizontalAlignment="Left" Height="34" Margin="343,222,0,0" VerticalAlignment="Top" Width="205" Maximum="350" Minimum="50" ValueChanged="MeatTemperatureValueChanged" Grid.RowSpan="2"/>
+                <Image HorizontalAlignment="Left" Height="68" Margin="244,201,0,0" VerticalAlignment="Top" Width="86" Source="/ovenTemperature.png" Grid.RowSpan="2">
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/ovenTemperature.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Label x:Name ="MeatTemperatureLabel" Content="50" HorizontalAlignment="Left" Height="59" VerticalAlignment="Top" Width="123" FontSize="40" Margin="553,192,0,0" Grid.RowSpan="2">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Button x:Name ="MeatStartButton" Click ="MeatStartButtonClick" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness ="3" BorderBrush="Black" Content="" HorizontalAlignment="Left" Height="150" Margin="746,73,0,0" VerticalAlignment="Top" Width="150" Grid.Row="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/do.png"/>
+                    </Button.Background>
+                </Button>
+                <Label Content="Start" HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="106" FontSize="40" Margin="770,4,0,0" Grid.Row="1">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+
+                <ToggleButton Name ="ChickenButton" Checked="Meat_Checked" Style="{DynamicResource ToggleButtonChicken}" Content="" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="282,84,0,0" Grid.Row="1">
+                    <ToggleButton.Effect>
+                        <DropShadowEffect BlurRadius="0" ShadowDepth="0"/>
+                    </ToggleButton.Effect>
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="/chicken.png"/>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <ToggleButton Name ="BeefButton" Checked="Meat_Checked" Style="{DynamicResource ToggleButtonBeef}" Content="" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="406,82,0,0" Grid.Row="1">
+                    <ToggleButton.Effect>
+                        <DropShadowEffect BlurRadius="0" ShadowDepth="0"/>
+                    </ToggleButton.Effect>
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="/steak.png"/>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <ToggleButton Name ="SausageButton" Checked="Meat_Checked" Style="{DynamicResource ToggleButtonSuasage}" Content="" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="531,82,0,0" Grid.Row="1">
+                    <ToggleButton.Effect>
+                        <DropShadowEffect BlurRadius="0" ShadowDepth="0"/>
+                    </ToggleButton.Effect>
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="/sausage.png"/>
+                    </ToggleButton.Background>
+                </ToggleButton>
+
+                <Label Content="Meat type" HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="324" FontSize="40" Margin="352,14,0,0" Grid.Row="1">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+            </Grid>
+            <Grid Name="VegetableGrid" d:IsHidden="True">
+                <Image HorizontalAlignment="Left" Height="185" Margin="725,0,0,0" VerticalAlignment="Top" Width="228" Source="/vegetables.png">
+                    <Image.Effect>
+                        <DropShadowEffect BlurRadius="10" Opacity="0.635" ShadowDepth="15" Direction="-44"/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/vegetables.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Label Content="Veggie Roast" HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="391" FontSize="40" Margin="10,0,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Image HorizontalAlignment="Left" Height="68" Margin="244,92,0,0" VerticalAlignment="Top" Width="104" Source="/time.png">
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/time.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Image HorizontalAlignment="Left" Height="68" Margin="412,0,0,0" VerticalAlignment="Top" Width="104" Source="/arrow.png" RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/arrow.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Image HorizontalAlignment="Left" Height="68" Margin="244,201,0,0" VerticalAlignment="Top" Width="86" Source="/ovenTemperature.png">
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/ovenTemperature.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Button Click ="VegetablesBackClick" x:Name ="VeggieBack" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness ="3"  BorderBrush="Black" Content="" HorizontalAlignment="Left" Height="150" Margin="28,292,0,0" VerticalAlignment="Top" Width="150">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/home.png"/>
+                    </Button.Background>
+                </Button>
+                <ComboBox x:Name="VegetableTimePicker" SelectionChanged="VegetableTimePicker_SelectionChanged" Margin="343,97,357,336" Background="Black" FontSize="30">
+                    <ComboBoxItem Content="30 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="40 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="50 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="60 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="70 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="80 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="90 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                </ComboBox>
+                <Ellipse x:Name ="VegetableTimerElipse" Fill ="Red"  HorizontalAlignment="Left" Height="24" Margin="569,115,0,0" Stroke="Black" VerticalAlignment="Top" Width="24"/>
+                <Slider x:Name ="VegetableTemperature" HorizontalAlignment="Left" Height="34" Margin="343,222,0,0" VerticalAlignment="Top" Width="205" Maximum="350" Minimum="50" ValueChanged="VegetableTemperatureValueChanged"/>
+                <Label x:Name ="VegetableTemperatureLabel" Content="50" HorizontalAlignment="Left" Height="59" VerticalAlignment="Top" Width="123" FontSize="40" Margin="553,192,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Button x:Name ="VegetableStartButton" Click ="VegetableStartButtonClick" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness ="3" BorderBrush="Black" Content="" HorizontalAlignment="Left" Height="150" Margin="746,304,0,0" VerticalAlignment="Top" Width="150">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/do.png"/>
+                    </Button.Background>
+                </Button>
+                <Label Content="Start" HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="106" FontSize="40" Margin="770,235,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+
+            </Grid>
+            <Grid Name="FishGrid">
+                <Image HorizontalAlignment="Left" Height="185" Margin="725,0,0,0" VerticalAlignment="Top" Width="228" Source="/fish.png">
+                    <Image.Effect>
+                        <DropShadowEffect BlurRadius="10" Opacity="0.635" ShadowDepth="15" Direction="-44"/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/fish.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Label Content="Fish" HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="391" FontSize="40" Margin="10,0,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Image HorizontalAlignment="Left" Height="68" Margin="244,92,0,0" VerticalAlignment="Top" Width="104" Source="/time.png">
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/time.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Image HorizontalAlignment="Left" Height="68" Margin="412,0,0,0" VerticalAlignment="Top" Width="104" Source="/arrow.png" RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/arrow.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Image HorizontalAlignment="Left" Height="68" Margin="244,201,0,0" VerticalAlignment="Top" Width="86" Source="/ovenTemperature.png">
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/ovenTemperature.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Button Click ="FishBackClick" x:Name ="FishBack" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness ="3"  BorderBrush="Black" Content="" HorizontalAlignment="Left" Height="150" Margin="28,292,0,0" VerticalAlignment="Top" Width="150">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/home.png"/>
+                    </Button.Background>
+                </Button>
+                <ComboBox x:Name="FishTimePicker" SelectionChanged="FishTimePicker_SelectionChanged" Margin="343,97,357,336" Background="Black" FontSize="30">
+                    <ComboBoxItem Content="30 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="40 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="50 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="60 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="70 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="80 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                    <ComboBoxItem Content="90 minutes" Background ="LightGray" BorderThickness ="0" Opacity ="1"/>
+                </ComboBox>
+                <Ellipse x:Name ="FishTimerElipse" Fill ="Red"  HorizontalAlignment="Left" Height="24" Margin="569,115,0,0" Stroke="Black" VerticalAlignment="Top" Width="24"/>
+                <Slider x:Name ="FishTemperature" HorizontalAlignment="Left" Height="34" Margin="343,222,0,0" VerticalAlignment="Top" Width="205" Maximum="350" Minimum="50" ValueChanged="FishTemperatureValueChanged"/>
+                <Label x:Name ="FishTemperatureLabel" Content="50" HorizontalAlignment="Left" Height="59" VerticalAlignment="Top" Width="123" FontSize="40" Margin="553,192,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Button x:Name ="FishStartButton" Click ="FishStartButtonClick" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness ="3" BorderBrush="Black" Content="" HorizontalAlignment="Left" Height="150" Margin="746,304,0,0" VerticalAlignment="Top" Width="150">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/do.png"/>
+                    </Button.Background>
+                </Button>
+                <Label Content="Start" HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="106" FontSize="40" Margin="770,235,0,0">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+
+            </Grid>
+
+            <Grid Name="StoveGrid" d:IsHidden="True">
+                <Button Click ="StoveBackClick" x:Name ="StoveBack" Style ="{DynamicResource ButtonMainMenuStyle}" BorderThickness ="3"  BorderBrush="Black" Content="" HorizontalAlignment="Left" Height="150" Margin="139,300,0,0" VerticalAlignment="Top" Width="150">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/home.png"/>
+                    </Button.Background>
+                </Button>
+                <Image HorizontalAlignment="Left" Height="484" Margin="434,-4,0,0" VerticalAlignment="Top" Width="476" Source="/stoveUp.png">
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/stoveUp.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <ToggleButton Click ="StoveButtonLeftUp" Style="{DynamicResource onoff}" Content="" BorderBrush ="Black" BorderThickness="3"  FontSize="120" FontWeight="Bold" Cursor="Hand" Margin="493,54,263,279" >
+                    <ToggleButton.Effect>
+                        <DropShadowEffect BlurRadius="0" ShadowDepth="0.1"/>
+                    </ToggleButton.Effect>
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="/on.png"/>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <ToggleButton  Click ="StoveButtonRightUp" Style="{DynamicResource onoff}" Content="" BorderBrush ="Black" BorderThickness="3"  FontSize="120" FontWeight="Bold" Cursor="Hand" Margin="697,54,59,279" >
+                    <ToggleButton.Effect>
+                        <DropShadowEffect BlurRadius="0" ShadowDepth="0.1"/>
+                    </ToggleButton.Effect>
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="/on.png"/>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <ToggleButton  Click ="StoveButtonLeftDown" Style="{DynamicResource onoff}" Content="" BorderBrush ="Black" BorderThickness="3"  FontSize="120" FontWeight="Bold" Cursor="Hand" Margin="516,261,286,124" >
+                    <ToggleButton.Effect>
+                        <DropShadowEffect BlurRadius="0" ShadowDepth="0.1"/>
+                    </ToggleButton.Effect>
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="/on.png"/>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <ToggleButton  Click ="StoveButtonRightDown" Style="{DynamicResource onoff}" Content="" BorderBrush ="Black" BorderThickness="3"  FontSize="120" FontWeight="Bold" Cursor="Hand" Margin="720,261,82,124" >
+                    <ToggleButton.Effect>
+                        <DropShadowEffect BlurRadius="0" ShadowDepth="0.1"/>
+                    </ToggleButton.Effect>
+                    <ToggleButton.Background>
+                        <ImageBrush ImageSource="/on.png"/>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <Label x:Name ="StoveCheckLabLeftUp" Content="OFF" HorizontalAlignment="Left" Height="161" VerticalAlignment="Top" Width="222" Margin="28,-9,0,0" FontSize="60">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Label x:Name ="StoveCheckLabRightUp" Content="OFF" HorizontalAlignment="Left" Height="161" VerticalAlignment="Top" Width="222" Margin="271,-9,0,0" FontSize="60">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Label x:Name ="StoveCheckLabRightDown" Content="OFF" HorizontalAlignment="Left" Height="161" VerticalAlignment="Top" Width="222" Margin="271,182,0,0" FontSize="60">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Label x:Name ="StoveCheckLabLeftDown" Content="OFF" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="222" Margin="28,182,0,0" FontSize="60">
+                    <Label.Effect>
+                        <DropShadowEffect/>
+                    </Label.Effect>
+                </Label>
+                <Ellipse x:Name="StoveElipseRightUp" HorizontalAlignment="Left" Height="15" Margin="845,54,0,0" Stroke="Black" VerticalAlignment="Top" Width="16" Fill="Red"/>
+                <Ellipse x:Name="StoveElipseLeftUp" HorizontalAlignment="Left" Height="15" Margin="641,54,0,0" Stroke="Black" VerticalAlignment="Top" Width="16" Fill="Red"/>
+                <Ellipse x:Name="StoveElipseLeftDown" HorizontalAlignment="Left" Height="15" Margin="618,261,0,0" Stroke="Black" VerticalAlignment="Top" Width="16" Fill="Red"/>
+                <Ellipse x:Name="StoveElipseRightDown" HorizontalAlignment="Left" Height="15" Margin="822,261,0,0" Stroke="Black" VerticalAlignment="Top" Width="16" Fill="Red"/>
+
+            </Grid>
+        </Grid>
+
+    </Border>
+</Window>
